@@ -39,10 +39,10 @@ void	four_sided(t_main *main)
 
 void	unlock_door(t_main *main)
 {
-	if (main->world_map[15][11] == 4)
-		main->world_map[15][11] = 0;
+	if (main->maze[15][11] == 4)
+		main->maze[15][11] = 0;
 	else
-		main->world_map[15][11] = 4;
+		main->maze[15][11] = 4;
 	mlx_destroy_image(main->mlx, main->img);
 	img_init(main);
 	Mix_PlayChannel(-1, main->door_open, 0);

@@ -16,12 +16,12 @@ void	move_forward(t_main *main)
 {
 	mlx_destroy_image(main->mlx, main->img);
 	img_init(main);
-	if (main->world_map[(int)(POS_X + main->dir_x
+	if (main->maze[(int)(POS_X + main->dir_x
 			* main->move_speed)][(int)POS_Y] == 0
 			|| ((int)(POS_X + main->dir_x
 			* main->move_speed) == 17 && (int)POS_Y == 3))
 		POS_X += main->dir_x * main->move_speed;
-	if (main->world_map[(int)POS_X][(int)(POS_Y
+	if (main->maze[(int)POS_X][(int)(POS_Y
 			+ main->dir_y * main->move_speed)] == 0)
 		POS_Y += main->dir_y * main->move_speed;
 	raycasting(main);
@@ -34,12 +34,12 @@ void	move_backward(t_main *main)
 {
 	mlx_destroy_image(main->mlx, main->img);
 	img_init(main);
-	if (main->world_map[(int)(POS_X - main->dir_x
+	if (main->maze[(int)(POS_X - main->dir_x
 			* main->move_speed)][(int)POS_Y] == 0
 			|| ((int)(POS_X - main->dir_x
 			* main->move_speed) == 17 && (int)POS_Y == 3))
 		POS_X -= main->dir_x * main->move_speed;
-	if (main->world_map[(int)POS_X][(int)(POS_Y
+	if (main->maze[(int)POS_X][(int)(POS_Y
 			- main->dir_y * main->move_speed)] == 0)
 		POS_Y -= main->dir_y * main->move_speed;
 	raycasting(main);

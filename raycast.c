@@ -96,7 +96,7 @@ void	perform_dda(t_main *main)
 			main->map_y += main->step_y;
 			main->side = 1;
 		}
-		if (main->world_map[main->map_x][main->map_y] > 0)
+		if (main->maze[main->map_x][main->map_y] > 0)
 			hit = 1;
 	}
 }
@@ -112,7 +112,7 @@ void	calc_for_draw(t_main *main, int x)
 	main->draw_end = main->line_height / 2 + HEIGHT / 2;
 	if (main->draw_end >= HEIGHT)
 		main->draw_end = HEIGHT - 1;
-	main->tex_num = main->world_map[main->map_x][main->map_y] - 1;
+	main->tex_num = main->maze[main->map_x][main->map_y] - 1;
 	if (main->side == 0)
 		wall_x = R_POS_Y + main->perp_wall_dist * R_DIR_Y;
 	else

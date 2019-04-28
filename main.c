@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "wolf.h"
-#include <stdio.h>
+
 static int			key_binds(int keycode, t_main *main)
 {
 	if (keycode == 53)
@@ -34,13 +34,13 @@ static int			key_binds(int keycode, t_main *main)
 	return (0);
 }
 
-static int			exit_pr(void)
+static int			terminate_programe(void)
 {
-	exit(1);
+	exit(0);
 	return (0);
 }
 
-static void			starting_setup(t_main *main)
+static void			setting_up_main_structure(t_main *main)
 {
 	int i;
 
@@ -65,15 +65,15 @@ static void			starting_setup(t_main *main)
 	}
 }
 
-static void			pars(t_main *main, int ac, char **av)
+static void			handling_cmd(t_main *main, const int argc, const char *argv[])
 {
 	int		fd;
 	char	*inf;
 
-	if (ac != 2)
+	if (argc != 2)
 		ft_throw_exception("No map was passed into project");
-	fd = open(av[1], O_RDONLY);
-	if (ft_strcmp(av[1], "maps/1.wolf") == 0)
+	fd = open(argv[1], O_RDONLY);
+	if (ft_strcmp(argv[1], "maps/1.wolf") == 0)
 		main->for_side = 1;
 	else
 		main->for_side = 0;
@@ -84,17 +84,17 @@ static void			pars(t_main *main, int ac, char **av)
 		ft_throw_exception("No map data was read");
 }
 
-int					main(int ac, char **av)
+int					main(const int argc, const char *argv[])
 {
 	t_main	main;
 
 	SDL_Init(SDL_INIT_AUDIO);
-	pars(&main, ac, av);
+	handling_cmd(&main, argc, argv);
 	main.mlx = mlx_init();
 	main.win = mlx_new_window(main.mlx, WIDTH, HEIGHT, "Wolf3d");
 	img_init(&main);
-	main.world_map = get_world_map(main.inf);
-	starting_setup(&main);
+	main.maze = retrieve_maze(main.inf);
+	setting_up_main_structure(&main);
 	get_textures1(&main);
 	get_textures2(&main);
 	raycasting(&main);
@@ -102,7 +102,7 @@ int					main(int ac, char **av)
 	play_main_theme(&main);
 	mlx_put_image_to_window(main.mlx, main.win, main.img, 0, 0);
 	mlx_hook(main.win, 2, 5, key_binds, &main);
-	mlx_hook(main.win, 17, 0, exit_pr, &main);
+	mlx_hook(main.win, 17, 0, terminate_programe, &main);
 	mlx_loop(main.mlx);
 	while (1);
 	return (0);

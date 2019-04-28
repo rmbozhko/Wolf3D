@@ -13,32 +13,32 @@
 #include "wolf.h"
 #include <stdio.h>
 
-int		**get_world_map(char *inf)
+int		**retrieve_maze(char *str)
 {
-	int		**map;
+	int		**maze;
 	char	**tmp;
 	int		k;
 	int		i;
 	int		j;
 
 	i = 0;
-	map = (int **)malloc(sizeof(int *) * MAP_HEIGHT);
-	tmp = ft_strsplit(inf, '\n');
+	maze = (int **)malloc(sizeof(int *) * MAP_HEIGHT);
+	tmp = ft_strsplit(str, '\n');
 	while (tmp[i])
 	{
 		j = 0;
 		k = 0;
-		map[i] = (int *)malloc(sizeof(int) * MAP_WIDTH);
+		maze[i] = (int *)malloc(sizeof(int) * MAP_WIDTH);
 		while (tmp[i][j] != '\0')
 		{
 			if (tmp[i][j] >= '0' && tmp[i][j] <= '9')
-				map[i][k++] = tmp[i][j] - '0';
+				maze[i][k++] = tmp[i][j] - '0';
 			j++;
 		}
 		i++;
 	}
 	ft_free_bidarr(tmp, i);
-	return (map);
+	return (maze);
 }
 
 char	*read_from_file(int fd)

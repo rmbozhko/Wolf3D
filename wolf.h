@@ -59,7 +59,7 @@ typedef struct	s_main
 	int			e;
 	char		*data;
 
-	int			**world_map;
+	int			**maze;
 	int			**textures;
 	int			tex_h[11];
 	int			tex_w[11];
@@ -129,7 +129,7 @@ void			get_textures1(t_main *main);
 void			get_textures2(t_main *main);
 
 char			*read_from_file(int fd);
-int				**get_world_map(char *inf);
+int				**retrieve_maze(char *str);
 
 void			raycasting(t_main *main);
 void			init(t_main *main, int x);
