@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbozhko <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 13:42:19 by rbozhko           #+#    #+#             */
+/*   Updated: 2019/04/28 13:42:20 by rbozhko          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
 void	raycasting(t_main *main)
@@ -111,6 +123,8 @@ void	calc_for_draw(t_main *main, int x)
 		main->tex_x = TEX_WIDTH - main->tex_x - 1;
 	if (main->side == 1 && R_DIR_Y < 0)
 		main->tex_x = TEX_WIDTH - main->tex_x - 1;
+	if (main->for_side == 1)
+		four_sided(main);
 	vert_line(x, main);
 	draw_ground(main, wall_x);
 }

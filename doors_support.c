@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doors_support.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbozhko <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 13:41:48 by rbozhko           #+#    #+#             */
+/*   Updated: 2019/04/28 13:41:50 by rbozhko          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
 void	show_tooltip(t_main *main)
@@ -11,6 +23,18 @@ void	show_tooltip(t_main *main)
 	}
 	else
 		main->door = 0;
+}
+
+void	four_sided(t_main *main)
+{
+	if (main->side == 0 && R_DIR_X > 0)
+		main->tex_num = 1;
+	else if (main->side == 0 && R_DIR_X < 0)
+		main->tex_num = 2;
+	else if (main->side == 1 && R_DIR_Y > 0)
+		main->tex_num = 3;
+	else
+		main->tex_num = 4;
 }
 
 void	unlock_door(t_main *main)

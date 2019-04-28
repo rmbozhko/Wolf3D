@@ -6,13 +6,13 @@
 /*   By: rbozhko <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 13:36:52 by rbozhko           #+#    #+#             */
-/*   Updated: 2019/04/01 13:37:57 by rbozhko          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:43:36 by rbozhko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-static FILE		*ft_get_file(void)
+static FILE				*ft_get_file(void)
 {
 	char		*filename;
 	FILE		*outfile;
@@ -25,7 +25,7 @@ static FILE		*ft_get_file(void)
 	return (outfile);
 }
 
-static void		ft_init_st(struct jpeg_compress_struct *c, FILE *o)
+static void				ft_init_st(struct jpeg_compress_struct *c, FILE *o)
 {
 	struct jpeg_error_mgr		jerr;
 
@@ -40,7 +40,7 @@ static void		ft_init_st(struct jpeg_compress_struct *c, FILE *o)
 	jpeg_start_compress(c, TRUE);
 }
 
-static unsigned char		*ft_get_proper(t_main *main)
+static unsigned char	*ft_get_proper(t_main *main)
 {
 	unsigned char		*temp;
 	size_t				i;
@@ -64,7 +64,7 @@ static unsigned char		*ft_get_proper(t_main *main)
 	return (temp);
 }
 
-int			ft_make_printscreen(t_main *main)
+int						ft_make_printscreen(t_main *main)
 {
 	FILE							*outfile;
 	struct jpeg_compress_struct		cinfo;

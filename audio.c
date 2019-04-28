@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   audio.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbozhko <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 13:41:42 by rbozhko           #+#    #+#             */
+/*   Updated: 2019/04/28 13:42:49 by rbozhko          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
 static void		load_files(t_main *main)
@@ -22,7 +34,7 @@ void			play_main_theme(t_main *main)
 		Mix_PlayMusic(main->main_theme, -1);
 }
 
-void		clean_up(t_main *main)
+void			clean_up(t_main *main)
 {
 	Mix_FreeChunk(main->door_open);
 	Mix_FreeChunk(main->footsteps);

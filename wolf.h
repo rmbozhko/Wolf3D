@@ -6,7 +6,7 @@
 /*   By: rbozhko <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 13:34:45 by rbozhko           #+#    #+#             */
-/*   Updated: 2019/04/01 13:36:33 by rbozhko          ###   ########.fr       */
+/*   Updated: 2019/04/28 13:45:51 by rbozhko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 typedef struct	s_main
 {
 	int			door;
-
+	int			for_side;
 	void		*mlx;
 	void		*win;
 
@@ -131,10 +131,6 @@ void			get_textures2(t_main *main);
 char			*read_from_file(int fd);
 int				**get_world_map(char *inf);
 
-/*
-raycast.c 
-*/
-
 void			raycasting(t_main *main);
 void			init(t_main *main, int x);
 void			calc_sidedist_n_step(t_main *main);
@@ -143,9 +139,6 @@ void			calc_for_draw(t_main *main, int x);
 void			draw_ground(t_main *main, double wall_x);
 void			main_drawcall(int x, t_main *main);
 
-/*
-key_interactions.c
-*/
 void			move_forward(t_main *main);
 void			move_backward(t_main *main);
 void			rotate_right(t_main *main);
@@ -153,14 +146,9 @@ void			rotate_left(t_main *main);
 int				mouse_control(int x, t_main *main);
 void			unlock_door(t_main *main);
 int				ft_make_printscreen(t_main *main);
-/*
-doors_support.c
-*/
-void			show_tooltip(t_main *main);
 
-/*
-audio.c
-*/
+void			show_tooltip(t_main *main);
+void			four_sided(t_main *main);
 
 void			audio_setup();
 void			play_main_theme(t_main *main);

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbozhko <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 13:42:10 by rbozhko           #+#    #+#             */
+/*   Updated: 2019/04/28 13:44:42 by rbozhko          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf.h"
 
-static int	key_binds(int keycode, t_main *main)
+static int			key_binds(int keycode, t_main *main)
 {
 	if (keycode == 53)
 	{
@@ -22,13 +34,13 @@ static int	key_binds(int keycode, t_main *main)
 	return (0);
 }
 
-static int	exit_pr(void)
+static int			exit_pr(void)
 {
 	exit(1);
 	return (0);
 }
 
-static void		starting_setup(t_main *main)
+static void			starting_setup(t_main *main)
 {
 	int i;
 
@@ -53,14 +65,29 @@ static void		starting_setup(t_main *main)
 	}
 }
 
-int			main(void)
+static void			pars(t_main *main, int ac, char **av)
 {
-	t_main	main;
 	int		fd;
 
+	if (ac != 2)
+	{
+		ft_putstr("invalid");
+		return ;
+	}
+	fd = open(av[1], O_RDONLY);
+	if (ft_strcmp(av[1], "maps/1.wolf") == 0)
+		main->for_side = 1;
+	else
+		main->for_side = 0;
+	main->inf = read_from_file(fd);
+}
+
+int					main(int ac, char **av)
+{
+	t_main	main;
+
 	SDL_Init(SDL_INIT_AUDIO);
-	fd = open("maps/maze.wolf", O_RDONLY);
-	main.inf = read_from_file(fd);
+	pars(&main, ac, av);
 	main.mlx = mlx_init();
 	main.win = mlx_new_window(main.mlx, WIDTH, HEIGHT, "Wolf3d");
 	img_init(&main);
