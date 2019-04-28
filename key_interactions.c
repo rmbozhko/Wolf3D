@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-void	move_forward(t_main *main)
+void	go_straight(t_main *main)
 {
 	mlx_destroy_image(main->mlx, main->img);
 	img_init(main);
@@ -30,7 +30,7 @@ void	move_forward(t_main *main)
 	show_tooltip(main);
 }
 
-void	move_backward(t_main *main)
+void	go_back(t_main *main)
 {
 	mlx_destroy_image(main->mlx, main->img);
 	img_init(main);
@@ -48,7 +48,7 @@ void	move_backward(t_main *main)
 	show_tooltip(main);
 }
 
-void	rotate_left(t_main *main)
+void	go_leftside(t_main *main)
 {
 	double old_dir_x;
 	double old_plane_x;
@@ -71,7 +71,7 @@ void	rotate_left(t_main *main)
 	show_tooltip(main);
 }
 
-void	rotate_right(t_main *main)
+void	go_rightside(t_main *main)
 {
 	double old_dir_x;
 	double old_plane_x;

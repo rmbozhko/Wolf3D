@@ -122,11 +122,16 @@ typedef struct	s_main
 	double		move_speed;
 }				t_main;
 
+
+int				key_binds(int keycode, t_main *main);
+int				terminate_programe(void);
+void			setting_up_main_structure(t_main *main);
+void			handling_cmd(t_main *main, const int argc, const char *argv[]);
+
 void			vert_line(int x, t_main *main);
 void			img_init(t_main *main);
 void			put_px(t_main *main, int x, int y, int color);
-void			get_textures1(t_main *main);
-void			get_textures2(t_main *main);
+void			upload_textures(t_main *main);
 
 char			*read_from_file(int fd);
 int				**retrieve_maze(char *str);
@@ -139,10 +144,10 @@ void			calc_for_draw(t_main *main, int x);
 void			draw_ground(t_main *main, double wall_x);
 void			main_drawcall(int x, t_main *main);
 
-void			move_forward(t_main *main);
-void			move_backward(t_main *main);
-void			rotate_right(t_main *main);
-void			rotate_left(t_main *main);
+void			go_straight(t_main *main);
+void			go_back(t_main *main);
+void			go_leftside(t_main *main);
+void			go_rightside(t_main *main);
 int				mouse_control(int x, t_main *main);
 void			unlock_door(t_main *main);
 int				ft_make_printscreen(t_main *main);
