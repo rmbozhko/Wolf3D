@@ -25,7 +25,7 @@ int			key_binds(int keycode, t_main *main)
 	if (keycode == 2)
 		go_rightside(main);
 	if (keycode == 49 && main->door == 1)
-		unlock_door(main);
+		open_door(main);
 	if (keycode == 35)
 		ft_make_printscreen(main);
 	return (0);

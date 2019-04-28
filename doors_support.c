@@ -94,7 +94,7 @@ void	four_sided(t_main *main)
 		main->tex_num = 4;
 }
 
-void	unlock_door(t_main *main)
+void	open_door(t_main *main)
 {
 	if (main->maze[15][11] == 4)
 		main->maze[15][11] = 0;

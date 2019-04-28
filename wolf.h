@@ -151,7 +151,7 @@ void			go_back(t_main *main);
 void			go_leftside(t_main *main);
 void			go_rightside(t_main *main);
 int				mouse_control(int x, t_main *main);
-void			unlock_door(t_main *main);
+void			open_door(t_main *main);
 int				ft_make_printscreen(t_main *main);
 
 void			show_tooltip(t_main *main);
