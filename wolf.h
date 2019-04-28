@@ -35,6 +35,8 @@
 
 # define INTERACT "PRESS <SPACE> TO INTERACT"
 
+# define BPP 32
+
 # define WIDTH 1920
 # define HEIGHT 1080
 
@@ -130,7 +132,7 @@ void			handling_cmd(t_main *main, const int argc, const char *argv[]);
 
 void			vert_line(int x, t_main *main);
 void			img_init(t_main *main);
-void			put_px(t_main *main, int x, int y, int color);
+void			draw_pixel(t_main *main, int x, int y, int color);
 void			upload_textures(t_main *main);
 
 char			*read_from_file(int fd);
@@ -141,7 +143,7 @@ void			init(t_main *main, int x);
 void			calc_sidedist_n_step(t_main *main);
 void			perform_dda(t_main *main);
 void			calc_for_draw(t_main *main, int x);
-void			draw_ground(t_main *main, double wall_x);
+void			draw_floor(t_main *main, double wall_x);
 void			main_drawcall(int x, t_main *main);
 
 void			go_straight(t_main *main);

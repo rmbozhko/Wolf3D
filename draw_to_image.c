@@ -27,21 +27,12 @@ void	vert_line(int x, t_main *main)
 			[TEX_HEIGHT * tex_y + main->tex_x];
 		if (main->side == 1)
 			main->color = (main->color >> 1) & 8355711;
-		put_px(main, x, y, main->color);
+		draw_pixel(main, x, y, main->color);
 		y++;
 	}
 }
 
-void	img_init(t_main *main)
-{
-	main->img = mlx_new_image(main->mlx, WIDTH, HEIGHT);
-	main->bpp = 32;
-	main->e = 0;
-	main->data = mlx_get_data_addr(main->img, &main->bpp,
-		&main->sline, &main->e);
-}
-
-void	put_px(t_main *main, int x, int y, int color)
+void	draw_pixel(t_main *main, int x, int y, int color)
 {
 	int r;
 	int g;
@@ -53,4 +44,30 @@ void	put_px(t_main *main, int x, int y, int color)
 	main->data[((y * main->sline) + (x * 4))] = r;
 	main->data[((y * main->sline) + (x * 4)) + 1] = g;
 	main->data[((y * main->sline) + (x * 4)) + 2] = b;
+}
+
+void		draw_floor(t_main *main, double wall_x)
+{
+	if (main->side == 0 && R_DIR_X > 0)
+	{
+		main->floor_x_wall = main->map_x;
+		main->floor_y_wall = main->map_y + wall_x;
+	}
+	else if (main->side == 0 && R_DIR_X < 0)
+	{
+		main->floor_x_wall = main->map_x + 1.0;
+		main->floor_y_wall = main->map_y + wall_x;
+	}
+	else if (main->side == 1 && R_DIR_Y > 0)
+	{
+		main->floor_x_wall = main->map_x + wall_x;
+		main->floor_y_wall = main->map_y;
+	}
+	else
+	{
+		main->floor_x_wall = main->map_x + wall_x;
+		main->floor_y_wall = main->map_y + 1.0;
+	}
+	main->dist_wall = main->perp_wall_dist;
+	main->dist_player = 0.0;
 }

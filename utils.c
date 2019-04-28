@@ -1,5 +1,14 @@
 #include "wolf.h"
 
+void	img_init(t_main *main)
+{
+	main->img = mlx_new_image(main->mlx, WIDTH, HEIGHT);
+	main->bpp = BPP;
+	main->e = 0;
+	main->data = mlx_get_data_addr(main->img, &main->bpp,
+		&main->sline, &main->e);
+}
+
 int			key_binds(int keycode, t_main *main)
 {
 	if (keycode == 53)

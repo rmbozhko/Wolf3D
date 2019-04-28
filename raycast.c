@@ -126,5 +126,5 @@ void	calc_for_draw(t_main *main, int x)
 	if (main->for_side == 1)
 		four_sided(main);
 	vert_line(x, main);
-	draw_ground(main, wall_x);
+	draw_floor(main, wall_x);
 }

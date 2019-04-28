@@ -29,6 +29,5 @@ int					main(const int argc, const char *argv[])
 	mlx_hook(main.win, 2, 5, key_binds, &main);
 	mlx_hook(main.win, 17, 0, terminate_programe, &main);
 	mlx_loop(main.mlx);
-	while (1);
 	return (0);
 }
