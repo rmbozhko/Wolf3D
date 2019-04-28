@@ -126,39 +126,33 @@ typedef struct	s_main
 
 
 int				key_binds(int keycode, t_main *main);
+void			play_main_theme(t_main *main);
+void			clean_up(t_main *main);
 int				terminate_programe(void);
 void			setting_up_main_structure(t_main *main);
-void			handling_cmd(t_main *main, const int argc, const char *argv[]);
-
-void			vert_line(int x, t_main *main);
 void			img_init(t_main *main);
-void			draw_pixel(t_main *main, int x, int y, int color);
 void			upload_textures(t_main *main);
-
-char			*read_from_file(int fd);
-int				**retrieve_maze(char *str);
-
-void			raycasting(t_main *main);
-void			init(t_main *main, int x);
-void			calc_sidedist_n_step(t_main *main);
-void			perform_dda(t_main *main);
-void			calc_for_draw(t_main *main, int x);
+void			handling_cmd(t_main *main, const int argc, const char *argv[]);
+void			draw_line(int x, t_main *main);
 void			draw_floor(t_main *main, double wall_x);
 void			main_drawcall(int x, t_main *main);
-
+void			raycasting(t_main *main);
+void			setting_up(t_main *main, int x);
+char			*read_from_file(int fd);
+int				**retrieve_maze(char *str);
+void			calc_sidedist_n_step(t_main *main);
+void			processingDDA(t_main *main);
 void			go_straight(t_main *main);
 void			go_back(t_main *main);
+void			calc_for_draw(t_main *main, int x);
+void			show_tooltip(t_main *main);
 void			go_leftside(t_main *main);
 void			go_rightside(t_main *main);
 int				mouse_control(int x, t_main *main);
 void			open_door(t_main *main);
 int				ft_make_printscreen(t_main *main);
-
-void			show_tooltip(t_main *main);
 void			four_sided(t_main *main);
-
 void			audio_setup();
-void			play_main_theme(t_main *main);
-void			clean_up(t_main *main);
+void			draw_pixel(t_main *main, int x, int y, int color);
 
 #endif

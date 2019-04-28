@@ -12,7 +12,7 @@
 
 #include "wolf.h"
 
-void	vert_line(int x, t_main *main)
+void	draw_line(int x, t_main *main)
 {
 	int y;
 	int d;

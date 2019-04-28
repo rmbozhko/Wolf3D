@@ -82,18 +82,6 @@ void	show_tooltip(t_main *main)
 		main->door = 0;
 }
 
-void	four_sided(t_main *main)
-{
-	if (main->side == 0 && R_DIR_X > 0)
-		main->tex_num = 1;
-	else if (main->side == 0 && R_DIR_X < 0)
-		main->tex_num = 2;
-	else if (main->side == 1 && R_DIR_Y > 0)
-		main->tex_num = 3;
-	else
-		main->tex_num = 4;
-}
-
 void	open_door(t_main *main)
 {
 	if (main->maze[15][11] == 4)

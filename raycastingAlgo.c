@@ -19,9 +19,9 @@ void	raycasting(t_main *main)
 	x = 0;
 	while (x < WIDTH)
 	{
-		init(main, x);
+		setting_up(main, x);
 		calc_sidedist_n_step(main);
-		perform_dda(main);
+		processingDDA(main);
 		if (main->side == 0)
 			main->perp_wall_dist = (main->map_x - R_POS_X
 				+ (1 - main->step_x) / 2) / R_DIR_X;
@@ -34,7 +34,7 @@ void	raycasting(t_main *main)
 	}
 }
 
-void	init(t_main *main, int x)
+void	setting_up(t_main *main, int x)
 {
 	main->camera_x = 2 * x / (double)WIDTH - 1;
 	R_POS_X = POS_X;
@@ -77,30 +77,6 @@ void	calc_sidedist_n_step(t_main *main)
 	}
 }
 
-void	perform_dda(t_main *main)
-{
-	int hit;
-
-	hit = 0;
-	while (hit == 0)
-	{
-		if (main->side_dist_x < main->side_dist_y)
-		{
-			main->side_dist_x += main->delta_dist_x;
-			main->map_x += main->step_x;
-			main->side = 0;
-		}
-		else
-		{
-			main->side_dist_y += main->delta_dist_y;
-			main->map_y += main->step_y;
-			main->side = 1;
-		}
-		if (main->maze[main->map_x][main->map_y] > 0)
-			hit = 1;
-	}
-}
-
 void	calc_for_draw(t_main *main, int x)
 {
 	double wall_x;
@@ -125,6 +101,6 @@ void	calc_for_draw(t_main *main, int x)
 		main->tex_x = TEX_WIDTH - main->tex_x - 1;
 	if (main->for_side == 1)
 		four_sided(main);
-	vert_line(x, main);
+	draw_line(x, main);
 	draw_floor(main, wall_x);
 }

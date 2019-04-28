@@ -28,6 +28,29 @@ static void		upload_rest_textures(t_main *main)
 	main->textures[10] = (int *)mlx_get_data_addr(temp, &b, &b, &b);
 }
 
+void	processingDDA(t_main *main)
+{
+	int hit;
+
+	hit = 0;
+	while (hit == 0)
+	{
+		if (main->side_dist_x < main->side_dist_y)
+		{
+			main->side_dist_x += main->delta_dist_x;
+			main->map_x += main->step_x;
+			main->side = 0;
+		}
+		else
+		{
+			main->side_dist_y += main->delta_dist_y;
+			main->map_y += main->step_y;
+			main->side = 1;
+		}
+		if (main->maze[main->map_x][main->map_y] > 0)
+			hit = 1;
+	}
+}
 
 void	upload_textures(t_main *main)
 {
@@ -48,4 +71,16 @@ void	upload_textures(t_main *main)
 		&(main->tex_h[3]), &(main->tex_w[3]));
 	main->textures[3] = (int *)mlx_get_data_addr(temp, &b, &b, &b);
 	upload_rest_textures(main);
+}
+
+void	four_sided(t_main *main)
+{
+	if (main->side == 0 && R_DIR_X > 0)
+		main->tex_num = 1;
+	else if (main->side == 0 && R_DIR_X < 0)
+		main->tex_num = 2;
+	else if (main->side == 1 && R_DIR_Y > 0)
+		main->tex_num = 3;
+	else
+		main->tex_num = 4;
 }
