@@ -6,12 +6,12 @@
 /*   By: rbozhko <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 13:42:10 by rbozhko           #+#    #+#             */
-/*   Updated: 2019/04/28 13:44:42 by rbozhko          ###   ########.fr       */
+/*   Updated: 2019/04/28 14:00:32 by rbozhko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-
+#include <stdio.h>
 static int			key_binds(int keycode, t_main *main)
 {
 	if (keycode == 53)
@@ -68,18 +68,20 @@ static void			starting_setup(t_main *main)
 static void			pars(t_main *main, int ac, char **av)
 {
 	int		fd;
+	char	*inf;
 
 	if (ac != 2)
-	{
-		ft_putstr("invalid");
-		return ;
-	}
+		ft_throw_exception("No map was passed into project");
 	fd = open(av[1], O_RDONLY);
 	if (ft_strcmp(av[1], "maps/1.wolf") == 0)
 		main->for_side = 1;
 	else
 		main->for_side = 0;
-	main->inf = read_from_file(fd);
+	inf = read_from_file(fd);
+	if (inf)
+		main->inf = inf;
+	else
+		ft_throw_exception("No map data was read");
 }
 
 int					main(int ac, char **av)

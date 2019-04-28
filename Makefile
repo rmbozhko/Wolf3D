@@ -26,6 +26,7 @@ $(NAME): $(SRCO)
 %.o: %.c
 	gcc -c $(FLAGS) $(INCLUDES) -o $@ $<
 clean:
+	@rm -f *.jpg
 	make clean -C libft/
 	/bin/rm -f *.o
 

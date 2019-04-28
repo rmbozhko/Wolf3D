@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "wolf.h"
+#include <stdio.h>
 
 int		**get_world_map(char *inf)
 {
@@ -49,6 +50,10 @@ char	*read_from_file(int fd)
 
 	buffer = (char *)malloc(sizeof(char) * 9001);
 	inf = (char *)malloc(sizeof(char));
+	if ((r = read(fd, buffer, 0)) < 0)
+	{
+		ft_throw_exception("Passed argument couldn't be read");
+	}
 	while ((r = read(fd, buffer, 9000)) > 0)
 	{
 		buffer[r] = '\0';
@@ -57,5 +62,10 @@ char	*read_from_file(int fd)
 		ft_strdel(&temp);
 	}
 	ft_strdel(&buffer);
+	if (!ft_strlen(inf))
+	{
+		free(inf);
+		inf = NULL;
+	}
 	return (inf);
 }
