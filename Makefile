@@ -1,6 +1,6 @@
 NAME = wolf3d
 
-SRC = main.c draw_to_image.c raycastingAlgo.c movementHandlers.c surfaceDrawing.c doors_support.c audio.c printScreen.c textures.c utils.c
+SRC = main.c ImgDrawing.c raycastingAlgo.c movementHandlers.c surfaceDrawing.c doorsHandler.c audio.c printScreen.c textures.c utils.c
 SRCO = $(SRC:.c=.o)
 
 LIBFT = libft/libft.a

@@ -12,40 +12,47 @@
 
 #include "wolf.h"
 
-void	go_straight(t_main *main)
+void	setting_up(t_main *main, int x)
 {
-	mlx_destroy_image(main->mlx, main->img);
-	img_init(main);
-	if (main->maze[(int)(POS_X + main->dir_x
-			* main->move_speed)][(int)POS_Y] == 0
-			|| ((int)(POS_X + main->dir_x
-			* main->move_speed) == 17 && (int)POS_Y == 3))
-		POS_X += main->dir_x * main->move_speed;
-	if (main->maze[(int)POS_X][(int)(POS_Y
-			+ main->dir_y * main->move_speed)] == 0)
-		POS_Y += main->dir_y * main->move_speed;
-	raycasting(main);
-	mlx_put_image_to_window(main->mlx, main->win, main->img, 0, 0);
-	Mix_PlayChannelTimed(-1, main->footsteps, 2, 500);
-	show_tooltip(main);
+	main->camera_x = 2 * x / (double)WIDTH - 1;
+	R_POS_X = POS_X;
+	R_POS_Y = POS_Y;
+	R_DIR_X = main->dir_x + PLN_X * main->camera_x;
+	R_DIR_Y = main->dir_y + PLN_Y * main->camera_x;
+	main->map_x = (int)R_POS_X;
+	main->map_y = (int)R_POS_Y;
+	main->delta_dist_x = sqrt(1 + (R_DIR_Y * R_DIR_Y)
+									/ (R_DIR_X * R_DIR_X));
+	main->delta_dist_y = sqrt(1 + (R_DIR_X * R_DIR_X)
+									/ (R_DIR_Y * R_DIR_Y));
 }
 
-void	go_back(t_main *main)
+void				ft_init_st(struct jpeg_compress_struct *c, FILE *o)
 {
-	mlx_destroy_image(main->mlx, main->img);
-	img_init(main);
-	if (main->maze[(int)(POS_X - main->dir_x
-			* main->move_speed)][(int)POS_Y] == 0
-			|| ((int)(POS_X - main->dir_x
-			* main->move_speed) == 17 && (int)POS_Y == 3))
-		POS_X -= main->dir_x * main->move_speed;
-	if (main->maze[(int)POS_X][(int)(POS_Y
-			- main->dir_y * main->move_speed)] == 0)
-		POS_Y -= main->dir_y * main->move_speed;
-	raycasting(main);
-	mlx_put_image_to_window(main->mlx, main->win, main->img, 0, 0);
-	Mix_PlayChannelTimed(-1, main->footsteps, 2, 500);
-	show_tooltip(main);
+	struct jpeg_error_mgr		jerr;
+
+	c->err = jpeg_std_error(&jerr);
+	jpeg_create_compress(c);
+	jpeg_stdio_dest(c, o);
+	c->image_width = WIDTH;
+	c->image_height = HEIGHT;
+	c->input_components = 3;
+	c->in_color_space = JCS_RGB;
+	jpeg_set_defaults(c);
+	jpeg_start_compress(c, TRUE);
+}
+
+FILE				*ft_get_file(void)
+{
+	char		*filename;
+	FILE		*outfile;
+
+	filename = ft_strjoin("Wolf3D", ".jpg");
+	outfile = fopen(filename, "wb");
+	ft_strdel(&filename);
+	if (!outfile)
+		ft_throw_exception("Error opening output jpeg file.\n");
+	return (outfile);
 }
 
 void	go_leftside(t_main *main)

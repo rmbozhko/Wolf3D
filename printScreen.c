@@ -12,35 +12,66 @@
 
 #include "wolf.h"
 
-static FILE				*ft_get_file(void)
+void	go_back(t_main *main)
 {
-	char		*filename;
-	FILE		*outfile;
-
-	filename = ft_strjoin("Wolf3D", ".jpg");
-	outfile = fopen(filename, "wb");
-	ft_strdel(&filename);
-	if (!outfile)
-		ft_throw_exception("Error opening output jpeg file.\n");
-	return (outfile);
+	mlx_destroy_image(main->mlx, main->img);
+	img_init(main);
+	if (main->maze[(int)(POS_X - main->dir_x
+			* main->move_speed)][(int)POS_Y] == 0
+			|| ((int)(POS_X - main->dir_x
+			* main->move_speed) == 17 && (int)POS_Y == 3))
+		POS_X -= main->dir_x * main->move_speed;
+	if (main->maze[(int)POS_X][(int)(POS_Y
+			- main->dir_y * main->move_speed)] == 0)
+		POS_Y -= main->dir_y * main->move_speed;
+	raycasting(main);
+	mlx_put_image_to_window(main->mlx, main->win, main->img, 0, 0);
+	Mix_PlayChannelTimed(-1, main->footsteps, 2, 500);
+	show_tooltip(main);
 }
 
-static void				ft_init_st(struct jpeg_compress_struct *c, FILE *o)
+void	calcWallDistance(t_main *main)
 {
-	struct jpeg_error_mgr		jerr;
-
-	c->err = jpeg_std_error(&jerr);
-	jpeg_create_compress(c);
-	jpeg_stdio_dest(c, o);
-	c->image_width = WIDTH;
-	c->image_height = HEIGHT;
-	c->input_components = 3;
-	c->in_color_space = JCS_RGB;
-	jpeg_set_defaults(c);
-	jpeg_start_compress(c, TRUE);
+	if (R_DIR_X < 0)
+	{
+		main->step_x = -1;
+		main->side_dist_x = (R_POS_X - main->map_x)
+			* main->delta_dist_x;
+	}
+	else
+	{
+		main->step_x = 1;
+		main->side_dist_x = (main->map_x + 1.0 - R_POS_X)
+			* main->delta_dist_x;
+	}
+	if (R_DIR_Y < 0)
+	{
+		main->step_y = -1;
+		main->side_dist_y = (R_POS_Y - main->map_y)
+			* main->delta_dist_y;
+	}
+	else
+	{
+		main->step_y = 1;
+		main->side_dist_y = (main->map_y + 1.0 - R_POS_Y)
+			* main->delta_dist_y;
+	}
 }
 
-static unsigned char	*ft_get_proper(t_main *main)
+void	calculate_drawing_data(t_main *main, int y)
+{
+	main->current_dist = HEIGHT / (2.0 * y - HEIGHT);
+	main->weight = (main->current_dist - main->dist_player)
+	/ (main->dist_wall - main->dist_player);
+	main->cur_flr_x = main->weight * main->floor_x_wall
+	+ (1.0 - main->weight) * POS_X;
+	main->cur_flr_y = main->weight * main->floor_y_wall
+	+ (1.0 - main->weight) * POS_Y;
+	main->floor_tex_x = (int)(main->cur_flr_x * TEX_WIDTH) % TEX_WIDTH;
+	main->floor_tex_y = (int)(main->cur_flr_y * TEX_HEIGHT) % TEX_HEIGHT;
+}
+
+unsigned char	*ft_get_proper(t_main *main)
 {
 	unsigned char		*temp;
 	size_t				i;
@@ -62,27 +93,4 @@ static unsigned char	*ft_get_proper(t_main *main)
 		j += 3;
 	}
 	return (temp);
-}
-
-int						ft_make_printscreen(t_main *main)
-{
-	FILE							*outfile;
-	struct jpeg_compress_struct		cinfo;
-	JSAMPROW						row_pointer[1];
-	unsigned char					*temp;
-
-	outfile = ft_get_file();
-	ft_init_st(&cinfo, outfile);
-	temp = ft_get_proper(main);
-	while (cinfo.next_scanline < cinfo.image_height)
-	{
-		row_pointer[0] = &temp[cinfo.next_scanline * cinfo.image_width
-			* cinfo.input_components];
-		jpeg_write_scanlines(&cinfo, row_pointer, 1);
-	}
-	jpeg_finish_compress(&cinfo);
-	jpeg_destroy_compress(&cinfo);
-	fclose(outfile);
-	ft_strdel((char**)&temp);
-	return (1);
 }

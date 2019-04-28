@@ -40,33 +40,24 @@ int		**retrieve_maze(char *str)
 	return (maze);
 }
 
-char	*read_from_file(int fd)
+void	draw_line(int x, t_main *main)
 {
-	char	*inf;
-	char	*temp;
-	char	*buffer;
-	int		r;
+	int y;
+	int d;
+	int tex_y;
 
-	buffer = (char *)malloc(sizeof(char) * 9001);
-	inf = (char *)malloc(sizeof(char));
-	if ((r = read(fd, buffer, 0)) < 0)
+	y = main->draw_start;
+	while (y < main->draw_end)
 	{
-		ft_throw_exception("Passed argument couldn't be read");
+		d = y * 256 - HEIGHT * 128 + main->line_height * 128;
+		tex_y = ((d * TEX_HEIGHT) / main->line_height) / 256;
+		main->color = main->textures[main->tex_num]
+			[TEX_HEIGHT * tex_y + main->tex_x];
+		if (main->side == 1)
+			main->color = (main->color >> 1) & 8355711;
+		draw_pixel(main, x, y, main->color);
+		y++;
 	}
-	while ((r = read(fd, buffer, 9000)) > 0)
-	{
-		buffer[r] = '\0';
-		temp = inf;
-		inf = ft_strjoin(inf, buffer);
-		ft_strdel(&temp);
-	}
-	ft_strdel(&buffer);
-	if (!ft_strlen(inf))
-	{
-		free(inf);
-		inf = NULL;
-	}
-	return (inf);
 }
 
 void	show_tooltip(t_main *main)

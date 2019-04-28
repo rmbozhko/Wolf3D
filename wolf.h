@@ -22,101 +22,89 @@
 # include <OpenCL/opencl.h>
 # include "jpeglib/jpeglib.h"
 
-# define MLX main->mlx
-# define WIN main->win
-# define POS_X main->pos_x
-# define POS_Y main->pos_y
-# define R_POS_X main->ray_pos_x
-# define R_POS_Y main->ray_pos_y
-# define PLN_Y main->plane_y
-# define PLN_X main->plane_x
-# define R_DIR_X main->ray_dir_x
-# define R_DIR_Y main->ray_dir_y
 
 # define INTERACT "PRESS <SPACE> TO INTERACT"
 
 # define BPP 32
 
 # define WIDTH 1920
+
+# define POS_X main->pos_x
 # define HEIGHT 1080
 
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
+# define MLX main->mlx
+# define WIN main->win
 
-# define TEX_WIDTH 129
-# define TEX_HEIGHT 129
+# define R_POS_Y main->ray_pos_y
+# define PLN_Y main->plane_y
 
 # define NUM_SPRITES 3
+# define R_POS_X main->ray_pos_x
+# define PLN_X main->plane_x
+
+# define MAP_WIDTH 24
+# define R_DIR_X main->ray_dir_x
+# define MAP_HEIGHT 24
+# define R_DIR_Y main->ray_dir_y
+# define TEX_WIDTH 129
+# define POS_Y main->pos_y
+# define TEX_HEIGHT 129
+
 
 typedef struct	s_main
 {
-	int			door;
-	int			for_side;
-	void		*mlx;
-	void		*win;
-
-	void		*img;
-	int			bpp;
-	int			sline;
-	int			e;
-	char		*data;
-
 	int			**maze;
 	int			**textures;
-	int			tex_h[11];
-	int			tex_w[11];
-
 	char		*inf;
-
-	double		pos_x;
-	double		pos_y;
-
-	double		dir_x;
 	double		dir_y;
-
-	double		plane_x;
-	double		plane_y;
-
-	double		camera_x;
+	double		pos_x;
+	int			tex_w[11];
+	double		pos_y;
+	double		dir_x;
 	double		ray_pos_x;
+	double		plane_x;
+	double		camera_x;
+	double		plane_y;
 	double		ray_pos_y;
+	int			for_side;
+	void		*mlx;
 	double		ray_dir_x;
-	double		ray_dir_y;
-
+	int			door;
+	void		*win;
+	void		*img;
 	int			map_x;
-	int			map_y;
-
-	double		side_dist_x;
-	double		side_dist_y;
-
-	double		floor_x_wall;
-	double		floor_y_wall;
-	double		dist_wall;
-	double		dist_player;
-	double		current_dist;
-	double		cur_flr_x;
-	double		cur_flr_y;
-	int			floor_tex_x;
-	int			floor_tex_y;
-	double		weight;
-
-	double		delta_dist_x;
-	double		delta_dist_y;
-	double		perp_wall_dist;
-
-	int			step_x;
-	int			step_y;
-
-	int			side;
-
-	int			line_height;
-	int			draw_start;
+	int			bpp;
 	int			draw_end;
 	int			color;
-
-	int			tex_x;
+	int			draw_start;
+	int			sline;
+	double		ray_dir_y;
+	int			e;
+	char		*data;
+	double		side_dist_x;
+	double		cur_flr_y;
+	double		side_dist_y;
+	int			floor_tex_x;
+	double		floor_x_wall;
+	double		dist_player;
+	double		floor_y_wall;
+	double		dist_wall;
+	double		current_dist;
+	double		cur_flr_x;
+	double		weight;
+	double		delta_dist_x;
+	int			map_y;
+	double		perp_wall_dist;
+	double		delta_dist_y;
+	int			floor_tex_y;
+	int			step_x;
+	int			line_height;
+	int			step_y;
+	int			side;
 	int			tex_num;
-
+	int			tex_x;
+	int			tex_h[11];
+	
 	Mix_Chunk	*footsteps;
 	Mix_Chunk	*door_open;
 	Mix_Music	*main_theme;
@@ -124,11 +112,13 @@ typedef struct	s_main
 	double		move_speed;
 }				t_main;
 
-
+void			ft_init_st(struct jpeg_compress_struct *c, FILE *o);
+unsigned char	*ft_get_proper(t_main *main);
 int				key_binds(int keycode, t_main *main);
 void			play_main_theme(t_main *main);
 void			clean_up(t_main *main);
 int				terminate_programe(void);
+void			calculate_drawing_data(t_main *main, int y);
 void			setting_up_main_structure(t_main *main);
 void			img_init(t_main *main);
 void			upload_textures(t_main *main);
@@ -140,11 +130,12 @@ void			raycasting(t_main *main);
 void			setting_up(t_main *main, int x);
 char			*read_from_file(int fd);
 int				**retrieve_maze(char *str);
-void			calc_sidedist_n_step(t_main *main);
+void			calcWallDistance(t_main *main);
+FILE			*ft_get_file(void);
 void			processingDDA(t_main *main);
 void			go_straight(t_main *main);
 void			go_back(t_main *main);
-void			calc_for_draw(t_main *main, int x);
+void			drawingMath(t_main *main, int x);
 void			show_tooltip(t_main *main);
 void			go_leftside(t_main *main);
 void			go_rightside(t_main *main);
